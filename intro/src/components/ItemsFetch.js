@@ -5,8 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Preloader from "./Preloader";
+import { useNavigate } from "react-router";
 
-function ItemsFetch() {
+function ItemsFetch(props) {
   const search = useSelector((state) => state.search.value);
   const value = useSelector((state) => state.value.value);
   const { pId } = useParams();
@@ -15,13 +16,14 @@ function ItemsFetch() {
   const [len, setLen] = useState(false);
   const [errorAdd, setErrorAdd] = useState(false);
   const [dataStart, setDataStart] = useState([]);
-  const [url, setUrl] = useState("http://localhost:7070/api/items");
+  const [url, setUrl] = useState(`${process.env.REACT_APP_SHOP_API}/items`);
+  const navigate = useNavigate();
 
   const [data, loading, error] = useJsonFetch(url, 3);
 
   useEffect(() => {
     if (pId !== "items" && value.length === 0) {
-      setUrl(`http://localhost:7070/api/items?categoryId=${pId}`);
+      setUrl(`${process.env.REACT_APP_SHOP_API}/items?categoryId=${pId}`);
       setLen(true);
       setCon(6);
     }
@@ -31,7 +33,7 @@ function ItemsFetch() {
       setCon(6);
     }
     if ((pId === undefined || pId === "items") && value.length === 0) {
-      setUrl("http://localhost:7070/api/items");
+      setUrl(`${process.env.REACT_APP_SHOP_API}/items`);
       setLen(true);
       setCon(6);
     }
@@ -47,7 +49,7 @@ function ItemsFetch() {
 
   useEffect(() => {
     if (
-      (pId === undefined || pId === "items" || pId !== "items") &&
+      props.filter === "ok" &&
       search.length > 0 &&
       (value.length > 0 || value.length === 0)
     ) {
@@ -55,7 +57,13 @@ function ItemsFetch() {
       setCon(6);
       setLen(true);
     }
-  }, [pId, search, value.length]);
+  }, [pId, props.filter, search, value.length]);
+
+  useEffect(() => {
+    if (dataStart.length === 0 && pId !== undefined && pId !== "items") {
+      navigate("/notFound");
+    }
+  }, [dataStart.length, navigate, pId]);
 
   function addItem() {
     setCon((prev) => prev + 6);
@@ -66,15 +74,19 @@ function ItemsFetch() {
       pId !== undefined
     ) {
       setLoadingAdd(true);
+      const controller = new AbortController();
+      const params = { signal: controller.signal };
       fetch(
-        `http://localhost:7070/api/items?categoryId=${pId}&q=${value}&offset=${con}`
-      ).then((response) => {
-        if (response.status >= 200 && response.status < 300) {
-          return response;
-        } else {
-          setErrorAdd(true);
-        }
-      })
+        `${process.env.REACT_APP_SHOP_API}/items?categoryId=${pId}&q=${value}&offset=${con}`,
+        params
+      )
+        .then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response;
+          } else {
+            setErrorAdd(true);
+          }
+        })
         .then((response) => response.json())
         .then((result) => {
           setDataStart([...dataStart, ...result]);
@@ -82,7 +94,16 @@ function ItemsFetch() {
           if (result.length < 6 || result === []) {
             setLen(false);
           }
+        })
+        .catch((err) => {
+          if (err.name === "TypeError") {
+            alert("Запрос Прерван!");
+          }
         });
+
+      return () => {
+        controller.abort();
+      };
     }
     if (
       value.length > 0 &&
@@ -90,7 +111,9 @@ function ItemsFetch() {
       (pId === undefined || pId === "items")
     ) {
       setLoadingAdd(true);
-      fetch(`http://localhost:7070/api/items?q=${value}&offset=${con}`)
+      const controller = new AbortController();
+      const params = { signal: controller.signal };
+      fetch(`${process.env.REACT_APP_SHOP_API}/items?q=${value}&offset=${con}`, params)
         .then((response) => response.json())
         .then((result) => {
           setDataStart([...dataStart, ...result]);
@@ -98,11 +121,22 @@ function ItemsFetch() {
           if (result.length < 6 || result === []) {
             setLen(false);
           }
+        })
+        .catch((err) => {
+          if (err.name === "TypeError") {
+            alert("Запрос Прерван!");
+          }
         });
+
+      return () => {
+        controller.abort();
+      };
     }
     if ((pId === undefined || pId === "items") && value.length === 0) {
       setLoadingAdd(true);
-      fetch(`http://localhost:7070/api/items?offset=${con}`)
+      const controller = new AbortController();
+      const params = { signal: controller.signal };
+      fetch(`${process.env.REACT_APP_SHOP_API}/items?offset=${con}`, params)
         .then((response) => response.json())
         .then((result) => {
           setDataStart([...dataStart, ...result]);
@@ -110,21 +144,42 @@ function ItemsFetch() {
           if (result.length < 6 || result === []) {
             setLen(false);
           }
+        })
+        .catch((err) => {
+          if (err.name === "TypeError") {
+            alert("Запрос Прерван!");
+          }
         });
+
+      return () => {
+        controller.abort();
+      };
     }
     if (pId !== "items" && pId !== undefined && value.length === 0) {
       setLoadingAdd(true);
-      fetch(`http://localhost:7070/api/items?categoryId=${pId}&offset=${con}`)
+      const controller = new AbortController();
+      const params = { signal: controller.signal };
+      fetch(
+        `${process.env.REACT_APP_SHOP_API}/items?categoryId=${pId}&offset=${con}`,
+        params
+      )
         .then((response) => response.json())
         .then((result) => {
-          console.log(result.length);
-          console.log(len);
           setDataStart([...dataStart, ...result]);
           setLoadingAdd(false);
           if (result.length < 6) {
             setLen(false);
           }
+        })
+        .catch((err) => {
+          if (err.name === "TypeError") {
+            alert("Запрос Прерван!");
+          }
         });
+
+      return () => {
+        controller.abort();
+      };
     }
   }
 

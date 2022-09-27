@@ -1,15 +1,16 @@
 import TopSales from "./TopSales";
-import Catalog from "./Catalog";
+import CatalogMain from "./CatalogMain";
+
 
 export default function HomePage() {
   return (
-    <section className=" container">
-      <article className="article">
-        <TopSales></TopSales>
-      </article>
-      <article className="article">
-        <Catalog ></Catalog>
-      </article>
-    </section>
+      <section className=" container">
+        <article className="article">
+          <TopSales></TopSales>
+        </article>
+        <article className="article">
+          <CatalogMain></CatalogMain>
+        </article>
+      </section>
   );
 }

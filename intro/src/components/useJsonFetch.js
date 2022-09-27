@@ -7,7 +7,9 @@ function useJsonFetch(url, opts = 1) {
 
   useEffect(() => {
     setLoading(true);
-    fetch(url)
+    const controller = new AbortController();
+    const params = { signal: controller.signal };
+    fetch(url, params)
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           return response;
@@ -23,7 +25,16 @@ function useJsonFetch(url, opts = 1) {
           setData(data);
         }
         setLoading(false);
+      })
+      .catch((err) => {
+        if (err.name === "TypeError") {
+          alert("Запрос Прерван!");
+        }
       });
+
+    return () => {
+      controller.abort();
+    };
   }, [url, opts]);
 
   return [data, loading, error];

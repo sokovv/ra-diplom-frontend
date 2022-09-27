@@ -4,7 +4,7 @@ import Preloader from "./Preloader";
 
 function DataFetch() {
   const [data, loading, error] = useJsonFetch(
-    "http://localhost:7070/api/top-sales",
+    `${process.env.REACT_APP_SHOP_API}/top-sales`,
     2
   );
   return (

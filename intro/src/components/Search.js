@@ -13,9 +13,8 @@ export default function Search() {
   const [form, setForm] = useState(searchClear);
   const [formSearch, setFormSearch] = useState();
   const [url, setUrl] = useState(
-    `http://localhost:7070/api/items?q=${formSearch}`
+    `${process.env.REACT_APP_SHOP_API}/items?q=${formSearch}`
   );
-
 
   useEffect(() => {
     setForm(text);
@@ -25,11 +24,11 @@ export default function Search() {
 
   useEffect(() => {
     if (pId === undefined || pId === "items") {
-      setUrl(`http://localhost:7070/api/items?q=${formSearch}`);
+      setUrl(`${process.env.REACT_APP_SHOP_API}/items?q=${formSearch}`);
     }
     if (pId !== "items" && pId !== undefined) {
       setUrl(
-        `http://localhost:7070/api/items?categoryId=${pId}&q=${formSearch}`
+        `${process.env.REACT_APP_SHOP_API}/items?categoryId=${pId}&q=${formSearch}`
       );
     }
   }, [formSearch, pId, text]);

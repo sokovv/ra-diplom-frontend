@@ -1,9 +1,8 @@
 import useJsonFetch from "./useJsonFetch";
 import { NavLink } from "react-router-dom";
 import ItemsFetch from "./ItemsFetch";
-import { useState } from "react";
-import Search from "./Search";
 import Preloader from "./Preloader";
+import { useState } from "react";
 
 function CategoryFetch() {
   const [loc, setLoc] = useState(window.location.pathname);
@@ -20,7 +19,6 @@ function CategoryFetch() {
   return (
     <>
       <h1 className="text-center">Каталог</h1>
-      <Search></Search>
       <ul className="catalog-categories nav justify-content-center">
         {(error && "Ошибка...") ||
           (loading ? (
@@ -43,17 +41,16 @@ function CategoryFetch() {
   );
 }
 
-function Catalog() {
-  const [filter] = useState('ok');
+function CatalogMain() {
   return (
     <>
       {" "}
       <section className=" container">
         <CategoryFetch></CategoryFetch>
-        <ItemsFetch filter={filter}/>
+        <ItemsFetch></ItemsFetch>
       </section>
     </>
   );
 }
 
-export default Catalog;
+export default CatalogMain;

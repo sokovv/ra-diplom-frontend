@@ -17,7 +17,7 @@ export default function Product() {
   const counter = useSelector((state) => state.counter.value);
 
   const [data, loading, error] = useJsonFetch(
-    `http://localhost:7070/api/items/${pId}`,
+    `${process.env.REACT_APP_SHOP_API}/items/${pId}`,
     5
   );
 
