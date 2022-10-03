@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 function useJsonFetch(url, opts = 1) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -28,14 +30,14 @@ function useJsonFetch(url, opts = 1) {
       })
       .catch((err) => {
         if (err.name === "TypeError") {
-          alert("Запрос Прерван!");
+          navigate("/danger");
         }
       });
 
     return () => {
       controller.abort();
     };
-  }, [url, opts]);
+  }, [url, opts, navigate]);
 
   return [data, loading, error];
 }

@@ -97,7 +97,7 @@ function ItemsFetch(props) {
         })
         .catch((err) => {
           if (err.name === "TypeError") {
-            alert("Запрос Прерван!");
+            navigate("/danger");
           }
         });
 
@@ -124,7 +124,7 @@ function ItemsFetch(props) {
         })
         .catch((err) => {
           if (err.name === "TypeError") {
-            alert("Запрос Прерван!");
+            navigate("/danger");
           }
         });
 
@@ -147,7 +147,7 @@ function ItemsFetch(props) {
         })
         .catch((err) => {
           if (err.name === "TypeError") {
-            alert("Запрос Прерван!");
+            navigate("/danger");
           }
         });
 
@@ -173,7 +173,7 @@ function ItemsFetch(props) {
         })
         .catch((err) => {
           if (err.name === "TypeError") {
-            alert("Запрос Прерван!");
+            navigate("/danger");
           }
         });
 

@@ -307,3 +307,48 @@ h2, .h2 {
   border-color: #727e86;
 }
 
+
+.n-danger
+ {
+    margin: 25px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 12px 12px 37px;
+    color: #333;
+    width: 350px;
+    border-radius: 2px;
+    background: #fff;
+    position: relative;
+    font-weight: bold;
+    font-family: Verdana, sans-serif;
+    box-sizing: border-box;
+}
+
+.n-danger:before
+ {
+    content: "";
+    margin-top: -5px;
+    background: inherit;
+    color: inherit;
+    border: inherit;
+    display: block;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    line-height: 48px;
+    position: absolute;
+    left: -25px;
+    box-sizing: border-box;
+    font-family: "FontAwesome";
+    font-size: 22px;
+}
+
+.n-danger {
+    border: 2px solid #d9534f;
+    color: #d9534f;
+}
+.n-danger:before  {
+    content: "\f057";
+}

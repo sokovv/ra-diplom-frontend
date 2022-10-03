@@ -10,6 +10,7 @@ import ItemsFetch from "./components/ItemsFetch";
 import Product from "./components/Product";
 import Cart from "./components/Cart";
 import NotFound from "./components/NotFound";
+import Danger from "./components/Danger";
 
 const MENU = {
   "": {
@@ -24,6 +25,9 @@ const MENU = {
   contacts: {
     title: "Контакты",
   },
+  danger: {
+    title: "Danger",
+  },
 };
 
 function App() {
@@ -37,6 +41,7 @@ function App() {
           <Route path="/catalog/:pId" element={<ItemsFetch />} />
         </Route>
         <Route path="/about" element={<About />} />
+        <Route path="/danger" element={<Danger />} />
         <Route path="/products/:pId" element={<Product />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/cart" element={<Cart />} />
