@@ -1,7 +1,7 @@
 {
   "name": "intro",
   "version": "0.1.0",
-  "homepage": "https://ra-diplom-frontend.github.io/react-gh-pages",
+  "homepage": "https://sokovv.github.io/ra-diplom-frontend/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
