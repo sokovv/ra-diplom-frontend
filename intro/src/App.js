@@ -25,9 +25,6 @@ const MENU = {
   contacts: {
     title: "Контакты",
   },
-  danger: {
-    title: "Danger",
-  },
 };
 
 function App() {

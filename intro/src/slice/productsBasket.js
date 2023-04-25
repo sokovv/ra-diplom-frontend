@@ -10,7 +10,7 @@ export const postOrder = createAsyncThunk(
   "cart/postOrder",
   async (owner, { getState }) => {
     const { items } = getState().productsBasket
-    const response = await fetch(`http://localhost:7070/api/order`, {
+    const response = await fetch(`https://ra-diplom-beckend.onrender.com/api/order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ owner, items }),
